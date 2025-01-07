@@ -17,6 +17,9 @@ framework:
     php_errors:
         log: true
 
+    profiler:
+        enabled: true
+
 when@test:
     framework:
         test: true

@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+{% import '_macros/delete-modal.html.twig' as macros %}
+{% import '_macros/stars.html.twig' as stars %}
+
+{% block title %}Reviews{% endblock %}
+
+{% block body %}
+    <nav class="navbar bg-light">
+        <div class="container-fluid">
+            <!-- Search Form -->
+            <form class="d-flex mx-auto w-50" role="search">
+                <input
+                        class="form-control me-2"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search"
+                        id="search-input"
+                        value="{{ searchQuery | e }}"> <!-- Preserve search query -->
+                <button class="btn btn-outline-success" type="button" id="search-button">Search</button>
+            </form>
+        </div>
+    </nav>
+
+
+    <div class="container-fluid mt-4 px-5">
+        <!-- Sorting Dropdown -->
+        <div class="d-flex justify-content-end mb-3">
+            <label for="sort-reviews" class="me-2">Sort by:</label>
+            <select id="sort-reviews" class="form-select w-auto">
+                <option value="newest" {{ sort == 'newest' ? 'selected' : '' }}>Newest</option>
+                <option value="oldest" {{ sort == 'oldest' ? 'selected' : '' }}>Oldest</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="container-fluid align-content-center mt-5 px-5">
+        <div class="col-12">
+            {% if reviews.items|length > 0 %}
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="reviews-container">
+                    {% for review in reviews.items %}
+                        <div class="col review-card">
+                            <div class="card h-100">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="{{ review.getBook().coverImage }}" class="img-fluid rounded-start" alt="Book cover">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="book-title">{{ review.getBook().title }}</h5>
+                                            <p class="book-author">By {{ review.getBook().author }}</p>
+                                            {{ stars.renderStars(review.rating) }}
+                                            <div>
+                                                <div class="review-text truncate-text">
+                                                    {{ review.reviewText }}
+                                                </div>
+                                            </div>
+                                            <small class="text-muted">Reviewed on {{ review.createdAt|date('Y-m-d') }}</small>
+                                            {% if review.getUser() == app.user or is_granted('ROLE_MODERATOR') or is_granted('ROLE_ADMIN') %}
+                                                <span class="float-end">
+        <a class="link-dark link-underline-opacity-0" href="{{ path('app_reviews_create', { bookId: review.book.id }) }}">
+            <i class="fas fa-pen" role="button"></i>
+        </a>
+        <i class="fas fa-trash-alt ms-2"
+           data-bs-toggle="modal"
+           data-bs-target="#deleteModal{{ review.id }}"
+           data-review-id="{{ review.id }}"></i>
+    </span>
+                                            {% endif %}
+
+                                            {{ macros.deleteModal(
+                                                'deleteModal' ~ review.id,
+                                                'Delete Review',
+                                                'Are you sure you want to delete this review?',
+                                                'confirmDeleteButton' ~ review.id
+                                            ) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center mt-4">
+                    {{ knp_pagination_render(reviews) }}
+                </div>
+            {% else %}
+                <div class="col-12 card text-center text-bg-light">
+                    <div class="card-body">
+                        <p class="card-text"> There are no reviews yet, Be the first to add one !!</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+

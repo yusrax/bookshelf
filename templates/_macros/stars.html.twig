@@ -1,0 +1,12 @@
+{% macro renderStars(rating) %}
+    <p class="mb-1"><strong>Rating:</strong>
+        {% for i in 1..5 %}
+            {% if i <= rating %}
+                <i class="fas fa-star text-warning"></i>
+            {% else %}
+                <i class="far fa-star text-warning"></i>
+            {% endif %}
+        {% endfor %}
+        {{ rating }}/5
+    </p>
+{% endmacro %}

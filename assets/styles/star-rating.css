@@ -1,0 +1,17 @@
+.star-rating {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.star {
+    font-size: 2rem;
+    color: #ddd; /* Default empty star color */
+    transition: color 0.2s;
+}
+
+.star:hover,
+.star.active {
+    color: #ffc107; /* Highlighted star color */
+}

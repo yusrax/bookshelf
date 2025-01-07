@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+        <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalRegister">
+                <div class="modal-dialog" role="document">
+                        <div class="modal-content rounded-4 shadow">
+                                <div class="p-5 pb-4 border-bottom-0 text-center">
+                                        <h3 class="fw-bold mb-3">Sign up for BookShelf</h3>
+                                        <small>Sign up to see what everyone thinks about your favorite books, share your own thoughts</small>
+                                </div>
+
+                                <div class="modal-body p-5 pt-0 text-center">
+                                        <!-- Display form errors -->
+                                        <div class="alert alert-danger rounded-3 d-none">
+                                                {{ form_errors(registrationForm) }}
+                                        </div>
+
+                                        <!-- Start the form -->
+                                        {{ form_start(registrationForm) }}
+
+                                        <!-- FirstName & LastName -->
+                                        <div class="row">
+                                                <div class="col form-floating mb-3">
+                                                        {{ form_widget(registrationForm.firstName, {
+                                                                'attr': {
+                                                                        'class': 'form-control ' ~ (registrationForm.firstName.vars.valid ? '' : 'is-invalid'),
+                                                                        'placeholder': 'First name'
+                                                                }
+                                                        }) }}
+                                                        {{ form_label(registrationForm.firstName, 'First Name') }}
+                                                        {% if not registrationForm.firstName.vars.valid %}
+                                                                <div class="invalid-feedback">
+                                                                        {{ form_errors(registrationForm.firstName) }}
+                                                                </div>
+                                                        {% endif %}
+                                                </div>
+                                                <div class="col form-floating mb-3">
+                                                        {{ form_widget(registrationForm.lastName, {
+                                                                'attr': {
+                                                                        'class': 'form-control ' ~ (registrationForm.lastName.vars.valid ? '' : 'is-invalid'),
+                                                                        'placeholder': 'Last name'
+                                                                }
+                                                        }) }}
+                                                        {{ form_label(registrationForm.lastName, 'Last Name') }}
+                                                        {% if not registrationForm.lastName.vars.valid %}
+                                                                <div class="invalid-feedback">
+                                                                        {{ form_errors(registrationForm.lastName) }}
+                                                                </div>
+                                                        {% endif %}
+                                                </div>
+                                        </div>
+
+                                        <!-- Username -->
+                                        <div class="form-floating mb-3">
+                                                {{ form_widget(registrationForm.username, {
+                                                        'attr': {
+                                                                'class': 'form-control ' ~ (registrationForm.username.vars.valid ? '' : 'is-invalid'),
+                                                                'placeholder': 'Username'
+                                                        }
+                                                }) }}
+                                                {{ form_label(registrationForm.username, 'Username') }}
+                                                {% if not registrationForm.username.vars.valid %}
+                                                        <div class="invalid-feedback">
+                                                                {{ form_errors(registrationForm.username) }}
+                                                        </div>
+                                                {% endif %}
+                                        </div>
+
+                                        <!-- Email Field -->
+                                        <div class="form-floating mb-3">
+                                                {{ form_widget(registrationForm.email, {
+                                                        'attr': {
+                                                                'class': 'form-control ' ~ (registrationForm.email.vars.valid ? '' : 'is-invalid'),
+                                                                'placeholder': 'Email address'
+                                                        }
+                                                }) }}
+                                                {{ form_label(registrationForm.email, 'Email address') }}
+                                                {% if not registrationForm.email.vars.valid %}
+                                                        <div class="invalid-feedback">
+                                                                {{ form_errors(registrationForm.email) }}
+                                                        </div>
+                                                {% endif %}
+                                        </div>
+
+                                        <!-- Password Field -->
+                                        <div class="form-floating mb-3">
+                                                {{ form_widget(registrationForm.plainPassword.first, {
+                                                        'attr': {
+                                                                'class': 'form-control ' ~ (registrationForm.plainPassword.first.vars.valid ? '' : 'is-invalid'),
+                                                                'placeholder': 'Password'
+                                                        }
+                                                }) }}
+                                                {{ form_label(registrationForm.plainPassword.first, 'Password') }}
+                                                {% if not registrationForm.plainPassword.first.vars.valid %}
+                                                        <div class="invalid-feedback">
+                                                                {{ form_errors(registrationForm.plainPassword.first) }}
+                                                        </div>
+                                                {% endif %}
+                                        </div>
+
+                                        <!-- Repeat Password Field -->
+                                        <div class="form-floating mb-3">
+                                                {{ form_widget(registrationForm.plainPassword.second, {
+                                                        'attr': {
+                                                                'class': 'form-control ' ~ (registrationForm.plainPassword.second.vars.valid ? '' : 'is-invalid'),
+                                                                'placeholder': 'Repeat Password'
+                                                        }
+                                                }) }}
+                                                {{ form_label(registrationForm.plainPassword.second, 'Repeat Password') }}
+                                                {% if not registrationForm.plainPassword.second.vars.valid %}
+                                                        <div class="invalid-feedback">
+                                                                {{ form_errors(registrationForm.plainPassword.second) }}
+                                                        </div>
+                                                {% endif %}
+                                        </div>
+
+                                        <!-- Profile Picture -->
+                                        <div class="mb-3">
+                                                {{ form_widget(registrationForm.profilePicture, {
+                                                        'attr': {
+                                                                'class': 'form-control ' ~ (registrationForm.profilePicture.vars.valid ? '' : 'is-invalid')
+                                                        }
+                                                }) }}
+                                                {{ form_label(registrationForm.profilePicture, 'Profile Picture') }}
+                                                {% if not registrationForm.profilePicture.vars.valid %}
+                                                        <div class="invalid-feedback">
+                                                                {{ form_errors(registrationForm.profilePicture) }}
+                                                        </div>
+                                                {% endif %}
+                                        </div>
+
+                                        <!-- Agree Terms Checkbox -->
+                                        <div class="form-check mb-3">
+                                                {{ form_widget(registrationForm.agreeTerms, {
+                                                        'attr': {
+                                                                'class': 'form-check-input ' ~ (registrationForm.agreeTerms.vars.valid ? '' : 'is-invalid')
+                                                        }
+                                                }) }}
+                                                {{ form_label(registrationForm.agreeTerms, 'Agree to terms and conditions', {'label_attr': {'class': 'form-check-label'}}) }}
+                                                {% if not registrationForm.agreeTerms.vars.valid %}
+                                                        <div class="invalid-feedback">
+                                                                {{ form_errors(registrationForm.agreeTerms) }}
+                                                        </div>
+                                                {% endif %}
+                                        </div>
+
+                                        <!-- Submit Button -->
+                                        <button type="submit" class="w-100 mb-2 btn btn-lg rounded-3 btn-primary">Register</button>
+
+                                        {{ form_end(registrationForm) }}
+
+                                        <!-- Already a member -->
+                                        <small class="text-body-secondary d-block mb-3">
+                                                Already a member? <a href="{{ path('app_login') }}">Log In</a>
+                                        </small>
+                                </div>
+
+                        </div>
+                </div>
+        </div>
+{% endblock %}
+

@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Book{% endblock %}
+
+{% block body %}
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalRegister">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="p-5 pb-4 border-bottom-0 text-center">
+                <h3 class="fw-bold mb-3">Add a New Book to BookShelf</h3>
+                <small>Expand our collection by adding your favorite book. Share its details and let others explore and review it!</small>
+            </div>
+            <div class="modal-body p-5 pt-0 text-center">
+                <!-- Display form errors -->
+                <div class="alert alert-danger rounded-3 d-none">
+                    {{ form_errors(form) }}
+                </div>
+
+                <!-- Start the form -->
+                {{ form_start(form) }}
+
+                <!-- Title -->
+                <div class="form-floating mb-3">
+                    {{ form_widget(form.title, {
+                        'attr': {
+                            'class': 'form-control ' ~ (form.title.vars.valid ? '' : 'is-invalid'),
+                            'placeholder': 'Title'
+                        }
+                    }) }}
+                    {{ form_label(form.title, 'Title') }}
+                    {% if not form.title.vars.valid %}
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.title) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Author -->
+                <div class="form-floating mb-3">
+                    {{ form_widget(form.author, {
+                        'attr': {
+                            'class': 'form-control ' ~ (form.author.vars.valid ? '' : 'is-invalid'),
+                            'placeholder': 'Author'
+                        }
+                    }) }}
+                    {{ form_label(form.author, 'Author') }}
+                    {% if not form.author.vars.valid %}
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.author) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    <!-- Pages -->
+                    <div class="col form-floating mb-3">
+                        {{ form_widget(form.pages, {
+                            'attr': {
+                                'class': 'form-control ' ~ (form.pages.vars.valid ? '' : 'is-invalid'),
+                                'placeholder': 'Pages'
+                            }
+                        }) }}
+                        {{ form_label(form.pages, 'Pages') }}
+                        {% if not form.pages.vars.valid %}
+                            <div class="invalid-feedback">
+                                {{ form_errors(form.pages) }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Genre -->
+                    <div class="col form-floating mb-3">
+                        {{ form_widget(form.genre, {
+                            'attr': {
+                                'class': 'form-control ' ~ (form.genre.vars.valid ? '' : 'is-invalid'),
+                                'placeholder': 'Genre'
+                            }
+                        }) }}
+                        {{ form_label(form.genre, 'Genre') }}
+                        {% if not form.genre.vars.valid %}
+                            <div class="invalid-feedback">
+                                {{ form_errors(form.genre) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="form-floating mb-3">
+                    {{ form_widget(form.summary, {
+                        'attr': {
+                            'class': 'form-control ' ~ (form.summary.vars.valid ? '' : 'is-invalid'),
+                            'placeholder': 'Summary'
+                        }
+                    }) }}
+                    {{ form_label(form.summary, 'Summary') }}
+                    {% if not form.summary.vars.valid %}
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.summary) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Cover Image -->
+                <div class="mb-3">
+                    {{ form_label(form.coverImage, 'Cover Image') }}
+                    {{ form_widget(form.coverImage, {
+                        'attr': {
+                            'class': 'form-control ' ~ (form.coverImage.vars.valid ? '' : 'is-invalid')
+                        }
+                    }) }}
+                    {% if not form.coverImage.vars.valid %}
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.coverImage) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-50 mb-2 btn btn-lg rounded-3 btn-warning">Add Book</button>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+    <nav class="navbar bg-body-tertiary px-5">
+        <div class="container-fluid">
+            <a class="navbar-brand mb-0 fs-3" href="/">bookshelf</a>
+            {% if app.user %}
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img
+                                src="{{ app.user.profilePicture }}"
+                                class="rounded-circle"
+                                height="25"
+                                alt="Profile Picture"
+                                loading="lazy"
+                        />
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end position-absolute">
+                        <li><a class="dropdown-item" href="/user">My Profile</a></li>
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+                {% else %}
+
+                <a href="/login" class="fs-5 link-dark link-underline-opacity-0" > Log In </a>
+
+            {% endif %}
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-0 " aria-label="Tenth navbar example">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">HOME</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/reviews">REVIEWS</a>
+                    </li>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ path('app_users') }}">USERS</a>
+                        </li>
+                    {% endif %}
+
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block body %}
+        {% endblock %}
+
+            <footer class="bg-light text-center py-3 border-top ">
+                <p class="col-md-4 mb-0 text-body-secondary">&copy; 2024 by Yusra Kabir</p>
+
+                <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+                </a>
+            </footer>
+
+    </body>
+</html>
